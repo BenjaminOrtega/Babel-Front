@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form [formGroup]="locacionesForm" (ngSubmit)=(guardar())>
+        <h2>Locaciones</h2>
+        <div class="mb-3">
+          <label for="sala" class="form-label">Sala</label>
+          <input type="text" class="form-control" id="sala" formControlName="sala" />
+        </div>
+        <div class="mb-3">
+          <label for="librero" class="form-label">Librero</label>
+          <input type="text" class="form-control" id="librero" formControlName="librero" />
+        </div>
+        <div class="mb-3">
+          <label for="estante" class="form-label">Estante</label>
+          <input type="text" class="form-control" id="estante" formControlName="estante" />
+        </div>
+        <div class="mb-3">
+          <label for="posicion" class="form-label">Posici&oacute;n</label>
+          <input type="text" class="form-control" id="posicion" formControlName="posicion" />
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary" [disabled] = "locacionesForm.invalid" >Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Sala</th>
+            <th scope="col">Librero</th>
+            <th scope="col">Estante</th>
+            <th scope="col">Posici&oacute;n</th>
+            <th scope="col">Estado de Uso</th>
+            <th scope="col">Obciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let locacion of locaciones">
+            <th scope="row">{{locacion.idLocacion}}</th>
+            <td>{{locacion.sala}}</td>
+            <td>{{locacion.librero}}</td>
+            <td>{{locacion.estante}}</td>
+            <td>{{locacion.posicion}}</td>
+            <td >
+              <div *ngIf="locacion.uso == true; then uso; else noUso"></div>
+              <ng-template #uso><p style="color: red;">Espacio en uso, no puede eliminar</p></ng-template>
+              <ng-template #noUso ><p style="color: green;">Espacio vac&iacute;o</p></ng-template>
+            </td>
+            <td>
+              <div *ngIf="locacion.uso == true; then borrar; else noBorrar" ></div>
+              <ng-template #borrar>
+                <button type="submit" class="btn btn-danger"  (click) = "eliminar(locacion)" disabled ="true">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </ng-template>
+              <ng-template #noBorrar>
+                <button type="submit" class="btn btn-danger"  (click) = "eliminar(locacion)">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </ng-template>
+
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form [formGroup]="librosForm" (ngSubmit)=(guardar())>
+        <h2>Libros</h2>
+        <div class="mb-3">
+          <label for="titulo" class="form-label">Titulo</label>
+          <input type="text" class="form-control" id="titulo" formControlName="titulo" />
+        </div>
+        <div class="mb-3">
+          <label for="volumen" class="form-label">Volumen</label>
+          <input type="text" class="form-control" id="volumen" formControlName="volumen" />
+        </div>
+        <div class="mb-3">
+          <label for="librero" class="form-label" selected="index == 1" >Locaci&oacute;n</label>
+          <select class="form-select" name="locacion" id="locacion" formControlName="locacion">
+            <option [ngValue]="null" disabled> Selecciona una locaci&oacute;n </option>
+            <option [ngValue]="locacion" *ngFor="let locacion of locaciones">
+              {{locacion.sala}} - {{locacion.librero}} - {{locacion.estante}} - {{locacion.posicion}}
+              </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary" [disabled] = "librosForm.invalid" >Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Volumen</th>
+            <th scope="col">Locaci&oacute;n</th>
+            <th scope="col">Opci&oacute;n</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let libro of libros">
+            <th scope="row">{{libro.idLibro}}</th>
+            <td>{{libro.titulo}}</td>
+            <td>{{libro.volumen}}</td>
+            <td>{{libro.locacion.sala}} - {{libro.locacion.librero}} - {{libro.locacion.estante}} - {{libro.locacion.posicion}}</td>
+            <td>
+              <button type="submit" class="btn btn-danger"  (click) = "eliminar(libro)">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
